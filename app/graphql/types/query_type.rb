@@ -1,5 +1,21 @@
 module Types
   class QueryType < Types::BaseObject
+    require 'pry'
+    field :find_merchant, MerchantType, null: true do
+      description "Find a merchant by ID and get their associated services"
+      
+    end
+
+    # Resolver for the merchant query
+    def find_merchant
+
+      return unless context[:current_user].is_a?(Merchant)
+      user = context[:current_user]
+      merchant = Merchant.includes(:categories, :services).find(user.id)
+      
+      merchant
+    end
+
     field :node, Types::NodeType, null: true, description: "Fetches an object given its ID." do
       argument :id, ID, required: true, description: "ID of the object."
     end

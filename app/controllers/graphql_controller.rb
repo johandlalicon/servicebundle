@@ -1,5 +1,5 @@
 class GraphqlController < ApplicationController
-  
+  require 'pry'
   # If accessing from outside this domain, nullify the session
   # This allows for outside API access while preventing CSRF attacks,
   # but you'll have to authenticate your user separately
@@ -32,24 +32,37 @@ class GraphqlController < ApplicationController
       
         decoded_token = JsonWebToken.decode(token)
         
-        user_id = decoded_token[0]
-        
-        user = User.find_by(id: user_id[0]["user_id"])  
-        
+        if decoded_token[0][0]["user_id"]
+          user = User.find_by(id: decoded_token[0][0]["user_id"])  
+        raise GraphQL::ExecutionError, 'User not found' unless user
         user
         
-      # rescue JWT::DecodeError, JWT::ExpiredSignature
-      #   nil
-      # end
+        elsif decoded_token[0][0]["merchant_id"]
+          
+          user = Merchant.find_by(id: decoded_token[0][0]["merchant_id"]) 
+          
+        raise GraphQL::ExecutionError, 'Merchant not found' unless user
+        
+          user
+        end
+
     elsif session[:token] 
         
         decoded_token = JsonWebToken.decode(session[:token])
         
-        user_id = decoded_token[0]
-        
-        user = User.find_by(id: user_id[0]["user_id"])  
-        
+        if decoded_token[0][0]["user_id"]
+          user = User.find_by(id: decoded_token[0][0]["user_id"])  
+        raise GraphQL::ExecutionError, 'User not found' unless user
+
         user
+        
+        elsif decoded_token[0][0]["merchant_id"]
+          
+          user = Merchant.find_by(id: decoded_token[0][0]["merchant_id"]) 
+          
+        # raise GraphQL::ExecutionError, 'Merchant not found' unless user
+          user
+        end
     else
       nil
     end

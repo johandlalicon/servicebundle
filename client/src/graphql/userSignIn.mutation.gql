@@ -1,7 +1,11 @@
 mutation SignIin($email: String!, $password: String!) {
   signInUser(input: { credentials: { email: $email, password: $password } }) {
     token
+    userType
     user {
+      id
+    }
+    merchant {
       id
     }
   }

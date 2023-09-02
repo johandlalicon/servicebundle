@@ -2,10 +2,15 @@
 
 import Login from './Login.vue';
 import { useAuthStore } from '../store/auth';
+import { useUserTypeStore } from "../store/userType";
 import { computed } from 'vue';
+
+const userTypeStore = useUserTypeStore();
 const authStore = useAuthStore();
 const isLoggedIn = computed(() => authStore.isLoggedIn);
 const user = computed(() => authStore.user);
+const type = computed(() => userTypeStore.userType);
+
 const logout = () => {
     authStore.setUser(null);
     localStorage.removeItem("authUser");
@@ -20,14 +25,16 @@ const logout = () => {
         <div class="flex justify-between items-center">
 
             <div class="flex gap-4">
-                <router-link to="/swipe">Home</router-link>
-                <router-link to="/match">Services</router-link>
+                <a href="#">Home</a>
+                <a href="#">Services</a>
+
+                <router-link v-if="type === 'Merchant'" to="/merchant">Merchant</router-link>
             </div>
             <div v-if="!isLoggedIn" class="justify-self-end">
                 <Login />
             </div>
-            <div v-else>
-                <span>{{ user.id }}</span>
+            <div v-else class="flex gap-4">
+                <span>{{ type }}</span>
                 <button @click="logout">Logout</button>
 
             </div>

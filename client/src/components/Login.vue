@@ -11,13 +11,16 @@
 
 <script setup>
 import { useAuthStore } from '../store/auth';
+import { useUserTypeStore } from "../store/userType";
 import { ref } from 'vue'
 import BaseInput from './BaseInput.vue';
 import { useMutation } from "@vue/apollo-composable"
 import SignInMutation from "../graphql/userSignIn.mutation.gql"
+import { useRouter } from "vue-router";
 
+const router = useRouter();
 const authStore = useAuthStore();
-
+const userTypeStore = useUserTypeStore();
 const { mutate: signInUser, onDone, onError, error, result } = useMutation(SignInMutation, () => ({
     variables: {
         email: userEmail.value,
@@ -32,15 +35,41 @@ function login() {
     signInUser()
 }
 
-onDone(result => {
-    const user = result.data.signInUser.user;
-    if (user) {
-        console.log(user)
-        authStore.setUser(user)
-        localStorage.setItem('token', result.data.signInUser.token)
 
+onDone(result => {
+
+    const userType = result.data.signInUser.userType
+    localStorage.setItem('token', result.data.signInUser.token)
+    if (result.data.signInUser.userType === "User") {
+        const user = result.data.signInUser.user;
+
+        authStore.setUser(user)
+        userTypeStore.setUserType(userType);
+    } else if (result.data.signInUser.userType === "Merchant") {
+        const merchant = result.data.signInUser.merchant;
+
+        authStore.setUser(merchant)
+        userTypeStore.setUserType(userType);
+        router.push("/merchant")
     }
 
 })
+
+// onDone(result => {
+//     console.log(result.data.signInUser.token)
+//     localStorage.setItem('token', result.data.signInUser.token)
+//     const user = result.data.signInUser.user;
+//     const merchant = result.data.signInUser.merchant;
+//     if (user) {
+//         console.log(user)
+//         authStore.setUser(user)
+
+//     } else {
+//         console.log(merchant)
+//         authStore.setUser(merchant)
+
+//     }
+
+// })
 
 </script>
