@@ -1,5 +1,7 @@
 module Types
   class MutationType < Types::BaseObject
+    field :add_service, mutation: Mutations::AddService
+    field :add_category, mutation: Mutations::AddCategory
     field :merchant_sign_in, mutation: Mutations::MerchantSignIn
     field :sign_in_user, mutation: Mutations::SignInUser
     field :create_user, mutation: Mutations::CreateUser

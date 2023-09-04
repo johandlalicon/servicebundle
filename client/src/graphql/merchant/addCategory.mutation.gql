@@ -1,0 +1,15 @@
+mutation AddCategory(
+  $name: String!
+  $description: String!
+  $image_url: String!
+) {
+  addCategory(
+    input: {
+      category: { name: $name, description: $description, imageUrl: $image_url }
+    }
+  ) {
+    category {
+      id
+    }
+  }
+}

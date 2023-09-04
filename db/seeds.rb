@@ -33,7 +33,7 @@
   # db/seeds.rb
 
 # Sample services
-# Service.create(
+# # Service.create(
 #     name: "Service 1",
 #     description: "Description for Service 1",
 #     price: 19.99,
@@ -43,7 +43,7 @@
 #     closing_time: "17:00:00",
 #     image_url: "service1.jpg",
 #     category_id: 1
-#   )
+# #   )
   
 #   Service.new(
 #     name: "Service 2",

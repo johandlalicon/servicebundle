@@ -1,0 +1,31 @@
+query {
+  findMerchant {
+    name
+    categories {
+      id
+      name
+      description
+      services {
+        id
+        name
+        description
+        price
+        openingTime
+        closingTime
+        availableDays
+      }
+    }
+    services {
+      name
+      description
+      price
+      openingTime
+      closingTime
+      availableDays
+      category {
+        id
+        name
+      }
+    }
+  }
+}

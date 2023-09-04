@@ -1,9 +1,12 @@
 <template>
     <div>
-        <label for="">{{ label }}
-            <input :value="modelValue" @input="$emit('update:modelValue', $event.target.value)" :placeholder="label"
-                v-bind="$attrs" :type="type" class="rounded px-2 " />
-        </label>
+
+        <div class="mt-1 relative rounded-md shadow-sm"><input :value="modelValue"
+                @input="$emit('update:modelValue', $event.target.value)" :placeholder="label" v-bind="$attrs" :type="type"
+                class="focus:ring-indigo-500 focus:border-indigo-500 block w-full pr-10 sm:text-sm border-gray-300 rounded-md py-2 px-4 border" />
+        </div>
+
+
     </div>
 </template>
 
