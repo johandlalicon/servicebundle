@@ -1,0 +1,12 @@
+query {
+  allServices {
+    id
+    name
+    description
+    price
+    openingTime
+    closingTime
+    availableDays
+    imageUrl
+  }
+}

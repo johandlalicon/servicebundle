@@ -1,10 +1,10 @@
 query {
-  findMerchant {
+  allMerchants {
+    id
     name
     categories {
       id
       name
-      description
       services {
         id
         name
@@ -14,20 +14,6 @@ query {
         closingTime
         availableDays
         imageUrl
-      }
-    }
-    services {
-      id
-      name
-      imageUrl
-      description
-      price
-      openingTime
-      closingTime
-      availableDays
-      category {
-        id
-        name
       }
     }
   }

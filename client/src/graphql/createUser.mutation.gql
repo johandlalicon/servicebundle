@@ -1,0 +1,24 @@
+mutation CreateUser(
+  $email: String!
+  $password: String!
+  $mobile: String!
+  $first_name: String!
+  $last_name: String!
+) {
+  createUser(
+    input: {
+      authProvider: {
+        firstName: $first_name
+        lastName: $last_name
+        mobile: $mobile
+        credentials: { email: $email, password: $password }
+      }
+    }
+  ) {
+    token
+    userType
+    user {
+      id
+    }
+  }
+}

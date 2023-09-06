@@ -7,6 +7,9 @@ import router from "./router";
 import { setContext } from "@apollo/client/link/context";
 import { createPinia } from "pinia";
 
+import VCalendar from "v-calendar";
+import "v-calendar/style.css";
+
 import {
   ApolloClient,
   createHttpLink,
@@ -46,4 +49,5 @@ const app = createApp({
   render: () => h(App),
 });
 app.use(router);
+app.use(VCalendar, {});
 app.use(pinia).mount("#app");

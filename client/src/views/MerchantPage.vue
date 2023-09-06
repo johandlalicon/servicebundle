@@ -24,8 +24,9 @@
             <div class="flex flex-col text-xs gap-4">
                 <div class="mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 max-w-screen-lg">
                     <CategoryBanner v-for="category in categories" :key="category.id" :name="category.name"
-                        @categoryClick="selectedCategory = category.services" />
+                        @categoryClick="selectedCategory = category.services" :existingCategoryData="category" />
                 </div>
+
                 <div class="max-w-xs mx-auto text-center">
                     <button @click="toggleAddCategory" class="px-2 py-1 text-sm">Add
                         A Category</button>
@@ -34,45 +35,52 @@
                     </div>
                 </div>
 
-
             </div>
         </div>
+
         <div v-else-if="showCard === 'ServiceList'">
             <div class="flex flex-col text-xs gap-4">
-                <div class="max-w-xs mx-auto">
-                    <button class="px-2 py-1 text-sm">Add
-                        A Service</button>
+                <button @click="toggleAddService" class="px-2 py-1 text-sm">Add
+                    A Service</button>
+                <div v-if="!isAddServiceButtonVisible" class="max-w-xs mx-auto ">
+                    <div class="max-w-xs mx-auto p-4 bg-white border border-gray-300 rounded-lg shadow-lg">
+                        <AddNewService :categories="categories" />
+
+                    </div>
                 </div>
                 <div class="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
                     <div class="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
                         <ServiceCard v-for="service in services" :key="service.id" :name="service.name"
-                            :price="service.price" />
+                            :image="service.imageUrl" :price="service.price" :servicesData="services"
+                            :existingServiceData="service" :categories="categories" />
                     </div>
 
                 </div>
             </div>
         </div>
     </div>
+
     <div v-if="showCard === 'CategoryBanner'" class="flex flex-col text-xs gap-4">
         <div class="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
             <div class="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
                 <ServiceCard v-for="service in selectedCategory" :key="service.id" :name="service.name"
-                    :description="service.description" :price="service.price" />
+                    :description="service.description" :price="service.price" :image="service.imageUrl" />
             </div>
         </div>
-
     </div>
 </template>
   
 <script setup>
 import CategoryBanner from '../components/CategoryBanner.vue'
 import ServiceCard from '../components/ServiceCard.vue';
+import AddNewService from '../components/AddNewService.vue';
 import AddNewCat from '../components/AddNewCat.vue';
 import { useQuery } from "@vue/apollo-composable"
 import GetMerchantQuery from '../graphql/merchant/findMerchant.query.gql'
 import { ref } from 'vue';
 
 const isAddCategoryButtonVisible = ref(true);
+const isAddServiceButtonVisible = ref(true);
 const showCard = ref("")
 const categories = ref([])
 const selectedCategory = ref([]);
@@ -91,5 +99,11 @@ const toggleAddCategory = () => {
     isAddCategoryButtonVisible.value = !isAddCategoryButtonVisible.value;
 };
 
+const toggleAddService = () => {
+    isAddServiceButtonVisible.value = !isAddServiceButtonVisible.value;
+};
+
 </script>
+
+<style></style>
   

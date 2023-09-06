@@ -1,0 +1,19 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user: one
+  service: one
+  merchant: one
+  upcoming: false
+  cancelled: false
+  completed: false
+  receipt: 1
+
+two:
+  user: two
+  service: two
+  merchant: two
+  upcoming: false
+  cancelled: false
+  completed: false
+  receipt: 1

@@ -24,17 +24,23 @@ import { useMutation } from "@vue/apollo-composable"
 import AddCategory from "../graphql/merchant/addCategory.mutation.gql"
 
 
-const catName = ref('');
-const catDescription = ref('');
-const image = ref('')
+const catName = ref(props.existingCategoryData ? props.existingCategoryData.name : '');;
+const catDescription = ref(props.existingCategoryData ? props.existingCategoryData.description : '');
+const image = ref(props.existingCategoryData ? props.existingCategoryData.imageUrl : '');
 
+const props = defineProps({
+    existingCategoryData: {
+        type: Object
+    },
+})
 
 
 const { mutate: addCategory, onDone, onError, error, result } = useMutation(AddCategory, () => ({
     variables: {
         name: catName.value,
         description: catDescription.value,
-        image_url: image.value
+        image_url: image.value,
+        id: props.existingCategoryData ? props.existingCategoryData.id : ""
     },
 
 }))
@@ -53,10 +59,11 @@ const widget = cloudinary.createUploadWidget(
 
 function openUploadWidget() {
     widget.open()
+    console.log(props.existingCategoryData.name)
 }
 
 const submitForm = () => {
-    if (!catName.value || !catDescription.value || !image.value) {
+    if (!catName.value || !catDescription.value) {
         console.error('Fields must be filled.');
         // You can display an error message to the user or perform other actions as needed.
         return;

@@ -13,7 +13,6 @@ module Types
     field :opening_time, GraphQL::Types::ISO8601DateTime
     field :closing_time, GraphQL::Types::ISO8601DateTime
     field :image_url, String
-
     field :category, Types::CategoryType, null: true do
       description "Category associated with this service"
     end

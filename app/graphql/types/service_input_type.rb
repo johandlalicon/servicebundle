@@ -9,5 +9,7 @@ module Types
     argument :opening_time, GraphQL::Types::ISO8601DateTime, required: true
     argument :closing_time, GraphQL::Types::ISO8601DateTime, required: true
     argument :available_days, [String], required: false
+    argument :category_id, ID, required: true
+    
   end
 end

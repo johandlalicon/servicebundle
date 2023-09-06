@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@apollo/client": "^3.8.1",
+    "@popperjs/core": "^2.11.8",
     "@vue/apollo-composable": "^4.0.0-beta.9",
     "flowbite": "^1.8.1",
     "flowbite-vue": "^0.0.17-next.2",
@@ -17,7 +18,9 @@
     "graphql-tag": "^2.12.6",
     "moment": "^2.29.4",
     "pinia": "^2.1.6",
+    "v-calendar": "^3.0.3",
     "vue": "^3.3.4",
+    "vue-luxon": "^0.10.0",
     "vue-router": "^4.2.4"
   },
   "devDependencies": {

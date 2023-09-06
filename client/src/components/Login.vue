@@ -45,6 +45,7 @@ onDone(result => {
 
         authStore.setUser(user)
         userTypeStore.setUserType(userType);
+        router.push("/user")
     } else if (result.data.signInUser.userType === "Merchant") {
         const merchant = result.data.signInUser.merchant;
 

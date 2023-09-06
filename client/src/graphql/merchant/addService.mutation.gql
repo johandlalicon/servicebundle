@@ -1,0 +1,31 @@
+mutation AddService(
+  $name: String!
+  $description: String
+  $price: Float!
+  $opening_time: ISO8601DateTime!
+  $closing_time: ISO8601DateTime!
+  $available_days: [String!]
+  $image_url: String
+  $category_id: ID!
+  $id: ID!
+) {
+  addService(
+    input: {
+      service: {
+        name: $name
+        description: $description
+        price: $price
+        openingTime: $opening_time
+        closingTime: $closing_time
+        availableDays: $available_days
+        imageUrl: $image_url
+        categoryId: $category_id
+      }
+      id: $id
+    }
+  ) {
+    merchant {
+      name
+    }
+  }
+}

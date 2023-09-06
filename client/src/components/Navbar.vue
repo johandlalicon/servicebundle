@@ -14,6 +14,7 @@ const type = computed(() => userTypeStore.userType);
 const logout = () => {
     authStore.setUser(null);
     localStorage.removeItem("authUser");
+    localStorage.removeItem("userType");
 
     window.location.reload();
     window.location.href = "/";
@@ -30,8 +31,9 @@ const logout = () => {
                         <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
                         <a href="#" class="bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium"
                             aria-current="page">Dashboard</a>
-                        <a href="#"
-                            class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Services</a>
+                        <router-link to="/marketplace"
+                            class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Marketplace</router-link>
+
 
                         <router-link v-if="type === 'Merchant'" to="/merchant"
                             class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Merchant</router-link>

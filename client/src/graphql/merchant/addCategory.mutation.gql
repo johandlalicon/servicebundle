@@ -1,11 +1,13 @@
 mutation AddCategory(
   $name: String!
   $description: String!
-  $image_url: String!
+  $image_url: String
+  $id: ID
 ) {
   addCategory(
     input: {
       category: { name: $name, description: $description, imageUrl: $image_url }
+      id: $id
     }
   ) {
     category {
