@@ -21,7 +21,8 @@ import { DefaultApolloClient } from "@vue/apollo-composable";
 const pinia = createPinia();
 
 const httpLink = createHttpLink({
-  uri: "http://localhost:3000/graphql",
+  // uri: "http://localhost:3000/graphql",
+  uri: "https://eeaao.onrender.com/graphql",
 });
 
 const authLink = setContext((_, { headers }) => {
