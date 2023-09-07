@@ -32,7 +32,7 @@ const logout = () => {
                         <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
                         <a href="#" class="bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium"
                             aria-current="page">Dashboard</a>
-                        <router-link to="/marketplace"
+                        <router-link v-if="type === 'User'" to="/marketplace"
                             class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Marketplace</router-link>
 
 
@@ -47,16 +47,15 @@ const logout = () => {
                         <Login />
                     </div>
                     <div v-else class="flex gap-4">
-                        <router-link to="/userbookings"
+
+                        <router-link v-if="type === 'Admin'" to="/admin"
                             class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">View
-                            Your Bookings</router-link>
+                            All Bookings</router-link>
                         <button @click="logout" class="py-2 px-4 text-sm bg-sky-500 text-white">Logout</button>
                     </div>
                 </div>
             </div>
         </div>
-
-        <!-- Mobile menu, show/hide based on menu state. -->
 
     </nav>
 </template>
