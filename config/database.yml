@@ -81,7 +81,7 @@ test:
 #
 production:
   <<: *default
-  url: <%= ENV['DATABASE_URL'] %>
+  # url: <%= ENV['DATABASE_URL'] %>
   database: service_bundle_production
   username: service_bundle
   password: <%= ENV["SERVICE_BUNDLE_DATABASE_PASSWORD"] %>

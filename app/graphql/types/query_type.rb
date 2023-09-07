@@ -16,6 +16,7 @@ module Types
 
     def all_bookings
       bookings = Booking.includes(:service, :user).all    
+      
     end
 
     field :find_merchant, MerchantType, null: true do
