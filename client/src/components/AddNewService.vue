@@ -1,5 +1,7 @@
 <template>
     <div class="gap-4 flex-col flex text-center">
+        <div v-if="loading">Loading...</div>
+        <div v-if="error">{{ error.message }}</div>
         <BaseInput v-model="serviceName" placeholder="Service Name" required />
         <textarea v-model="serviceDescription" placeholder="Enter Description"
             class="focus:ring-indigo-500 focus:border-indigo-500 block w-full pr-10 sm:text-sm border-gray-300 rounded-md py-2 px-4 border"
@@ -75,6 +77,9 @@ const endTime = ref(props.existingServiceData ? props.existingServiceData.closin
 
 const imageFound = ref(false)
 
+const isLoading = ref(false);
+
+
 const props = defineProps({
     categories: {
         type: Array
@@ -101,7 +106,7 @@ function openUploadWidget() {
     console.log(props.existingServiceData.category.id)
 }
 
-const { mutate: addService, onDone, onError, error, result } = useMutation(AddServiceMutation, () => ({
+const { mutate: addService, onDone, onError, error, loading } = useMutation(AddServiceMutation, () => ({
     variables: {
         name: serviceName.value,
         description: serviceDescription.value,
@@ -130,7 +135,7 @@ const submitForm = () => {
 };
 
 onDone(() => {
-    window.location.reload();
+    $router.go();
     console.log("Done?")
 });
 
