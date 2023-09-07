@@ -135,7 +135,7 @@ const submitForm = () => {
 };
 
 onDone(() => {
-    $router.go();
+    router.go()
     console.log("Done?")
 });
 
