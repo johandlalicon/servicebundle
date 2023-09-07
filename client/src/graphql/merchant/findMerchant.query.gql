@@ -16,7 +16,25 @@ query {
         imageUrl
       }
     }
+    bookings {
+      id
+      appointmentDate
+      upcoming
+      cancelled
+      completed
+      service {
+        id
+        name
+        imageUrl
+      }
+      user {
+        id
+        firstName
+        lastName
+      }
+    }
     services {
+      bookingCount
       id
       name
       imageUrl

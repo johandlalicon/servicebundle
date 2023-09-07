@@ -5,5 +5,6 @@ class Merchant < ApplicationRecord
 
     has_many :services
     has_many :categories
+    has_many :bookings
     
 end

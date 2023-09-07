@@ -14,6 +14,7 @@ module Mutations
       return unless credentials
 
       user = User.find_by(email: credentials[:email])
+      
       merchant = Merchant.find_by(email: credentials[:email])
       
       unless user && user.authenticate(credentials[:password])
@@ -23,12 +24,12 @@ module Mutations
       end
 
       if user
-        
+        user_type = user.isAdmin? ? 'Admin' : 'User'
         token = JsonWebToken.encode(user_id: user.id)
         
         context[:session][:token] = token
-
-        { user: user, user_type: 'User', token: token }
+        
+        { user: user, user_type: user_type, token: token }
       elsif merchant
         
         token = JsonWebToken.encode(merchant_id: merchant.id)

@@ -1,12 +1,13 @@
 <template>
-    <FullServiceDetails v-if="showUserPick" class="overlay" :key="userPick.id" :serviceName="userPick.name"
-        :description="userPick.description" :price="userPick.price" :availableDays="userPick.availableDays"
-        :imageUrl="userPick.imageUrl" :closingTime="formatTime(userPick.closingTime)" :serviceId="userPick.id"
-        :openingTime="formatTime(userPick.openingTime)" @sendFilloutForm="handleRegister" @cancelPick="closeUserPick" />
-    <RegisterUser v-if="showFillout" class="overlay" @cancelFillout="closeFillout" @getSummary="openSummary" />
-    <Summary v-if="showSummary" class="overlay" @closeSummary="closeSummary" />
-
+    <!-- <SuccessBooking v-if="showSuccessBooking" class="overlay" @viewAllService="closeSuccessBooking"
+        :bookingData="bookingData.value" /> -->
     <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8 border-b pb-4">
+        <FullServiceDetails v-if="showUserPick" class="overlay" :key="userPick.id" :serviceName="userPick.name"
+            :description="userPick.description" :price="userPick.price" :availableDays="userPick.availableDays"
+            :imageUrl="userPick.imageUrl" :closingTime="formatTime(userPick.closingTime)" :serviceId="userPick.id"
+            :openingTime="formatTime(userPick.openingTime)" @sendFilloutForm="handleRegister" @cancelPick="closeUserPick" />
+        <RegisterUser v-if="showFillout" class="overlay" @cancelFillout="closeFillout" @getSummary="openSummary" />
+        <Summary v-if="showSummary" class="overlay" @closeSummary="closeSummary" @showSuccessBooking="showSuccess" />
         <h1 class="text-xl font-extrabold">VIEW ALL SERVICE OR CHOOSE PREFERRED MERCHANT</h1>
         <div class="relative flex h-16 items-center justify-between">
             <div class="flex flex-1 items-center justify-center ">
@@ -54,6 +55,7 @@
             <div class="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
                 <ServiceCard v-for="service in selectedCategoryServices" :key="service.id" :name="service.name"
                     :image="service.imageUrl" :price="service.price" />
+                <ServiceList v-if="showCard === 'ServiceList'" @serviceClicked="handleServiceClick" />
             </div>
         </div>
     </div>
@@ -67,6 +69,8 @@ import ServiceList from '../components/ServiceList.vue';
 import ServiceCard from '../components/ServiceCard.vue'
 import FullServiceDetails from '../components/FullServiceDetails.vue';
 import RegisterUser from '../components/RegisterUser.vue';
+import SuccessBooking from '../components/SuccessBooking.vue'
+
 import Summary from '../components/Summary.vue';
 import { DateTime } from 'luxon';
 
@@ -79,7 +83,10 @@ const selectedCategoryServices = ref([])
 const showUserPick = ref(false)
 const showFillout = ref(false)
 const showSummary = ref(false)
+const showSuccessBooking = ref(false)
 const userPick = ref({})
+
+const bookingData = ref({})
 
 
 function formatTime(timeString) {
@@ -98,7 +105,6 @@ function formatTime(timeString) {
 const handleRegister = () => {
     showUserPick.value = false
     showFillout.value = true
-
 };
 
 const closeUserPick = () => {
@@ -120,6 +126,19 @@ const openSummary = () => {
 
 const closeSummary = () => {
     showSummary.value = false
+}
+
+const closeSuccessBooking = () => {
+    showSuccessBooking.value = false
+}
+
+const showSuccess = (bookingdata) => {
+    showFillout.value = false
+    showUserPick.value = false
+    showSummary.value = false
+    showSuccessBooking.value = true
+    console.log(bookingdata)
+    bookingData.value = bookingdata
 }
 
 const handleServiceClick = (selectedService) => {

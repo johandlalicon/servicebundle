@@ -7,6 +7,8 @@
         <h3 class="mt-4 text-sm text-gray-700">{{ name }}</h3>
         <p class="mt-1 text-lg font-medium text-gray-900">${{ price }}</p>
         <p class="text-sm italic font-light">{{ description }}</p>
+        <p v-if="type === 'Merchant'" class="mt-1 text-lg font-medium text-gray-900">Total Book Count: <span
+                class="text-sm italic font-light">{{ bookCount }}</span></p>
         <div v-if="type === 'Merchant'">
             <button @click="toggleEditForm">Edit</button>
             <div v-if="isEditFormVisible">
@@ -64,6 +66,9 @@ const prop = defineProps({
     },
     categories: {
         type: Array
+    },
+    bookCount: {
+        type: Number
     }
 })
 

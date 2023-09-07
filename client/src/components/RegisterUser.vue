@@ -3,13 +3,25 @@
 
         <div>
             <h1>PERSONAL INFORMATION</h1>
+            <p v-if="error">{{ error }}</p>
+            <div class="mb-4 flex flex-col gap-4">
+                <div v-if="!isLoggedIn">
+                    <span>If you already have an existing account </span><button @click="handleLogin">log in here</button>
+                    <Login v-if="showLogin" />
+                </div>
 
-            <div class="mb-4">
+                <div v-if="isLoggedIn" class="flex flex-col">
+                    <span>Confirmation email will be sent to: </span>
+                    <strong>{{ authStore.user.email }}</strong>
+                </div>
+            </div>
+            <div v-if="!isLoggedIn" class="mb-4">
                 <BaseInput v-model="email" label="Email Address" type="email" />
             </div>
             <div class="mb-4">
                 <BaseInput v-model="firstName" label="First Name" />
             </div>
+
             <div class="mb-4">
                 <BaseInput v-model="lastName" label="Last Name" />
             </div>
@@ -27,14 +39,21 @@
                     <option value="bankPayment">Bank Payment</option>
                 </select>
             </div>
-            <button @click="registerUser" class="bg-indigo-500 text-white py-2 px-4 rounded hover:bg-indigo-600">
-                Continue
-            </button>
-            {{ firstName }}
+            <div>
+                <button v-if="isLoggedIn" @click="bookUser"
+                    class="bg-indigo-500 text-white py-2 px-4 rounded hover:bg-indigo-600">
+                    Continue
+                </button>
+                <button v-else @click="registerUser" class="bg-indigo-500 text-white py-2 px-4 rounded hover:bg-indigo-600">
+                    Continue
+                </button>
+                <button @click="handleBack" class="py-2 px-4 rounded text-sm">
+                    Back
+                </button>
+
+            </div>
+
         </div>
-        <button @click="handleBack" class="py-2 px-4 rounded text-sm">
-            Back
-        </button>
 
     </div>
 </template>
@@ -49,6 +68,7 @@ import CreateUserMigration from "../graphql/createUser.mutation.gql"
 import { useAuthStore } from '../store/auth';
 import { useUserTypeStore } from "../store/userType";
 
+import Login from "../components/Login.vue"
 
 const authStore = useAuthStore();
 const userTypeStore = useUserTypeStore();
@@ -60,8 +80,13 @@ const mobileNumber = ref('');
 const paymentMethod = ref('');
 const password = ref('')
 
-const isLoggedIn = computed(() => authStore.isLoggedIn);
+const showLogin = ref(false)
+const isLoggedIn = computed(() => authStore.user);
 const emit = defineEmits();
+
+const handleLogin = () => {
+    showLogin.value = true
+}
 
 
 const registrationStore = useRegistrationStore(); // Initialize the store
@@ -76,8 +101,22 @@ const { mutate: createUser, onDone, onError, error, result } = useMutation(Creat
 }))
 const registerUser = () => {
 
-    createUser()
+    createUser();
+    console.log("register user")
 }
+
+
+const bookUser = () => {
+    registrationStore.setFirstName(firstName.value);
+    registrationStore.setLastName(lastName.value);
+    registrationStore.setEmail(email.value ? email.value : authStore.user.email);
+    registrationStore.setMobileNumber(mobileNumber.value);
+    registrationStore.setpaymentMethod(paymentMethod.value);
+    console.log('no created user')
+    emit('getSummary')
+}
+
+
 
 onDone(result => {
     const userType = result.data.createUser.userType
@@ -91,16 +130,12 @@ onDone(result => {
     registrationStore.setMobileNumber(mobileNumber.value);
     registrationStore.setpaymentMethod(paymentMethod.value);
     emit('getSummary')
+    console.log(result)
 })
 
 const handleBack = () => {
     emit('cancelFillout')
 }
-
-// email.value = '';
-//     firstName.value = '';
-//     lastName.value = '';
-//     mobileNumber.value = '';
 
 </script>
   

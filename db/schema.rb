@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_06_071913) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_07_032118) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -18,10 +18,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_06_071913) do
     t.bigint "user_id", null: false
     t.bigint "service_id", null: false
     t.bigint "merchant_id", null: false
-    t.boolean "upcoming"
-    t.boolean "cancelled"
-    t.boolean "completed"
-    t.integer "receipt"
+    t.boolean "upcoming", default: true
+    t.boolean "cancelled", default: false
+    t.boolean "completed", default: false
+    t.bigint "receipt"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "appointment_date"
@@ -72,6 +72,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_06_071913) do
     t.string "first_name"
     t.string "last_name"
     t.string "mobile_number"
+    t.boolean "isAdmin", default: false
   end
 
   add_foreign_key "bookings", "merchants"

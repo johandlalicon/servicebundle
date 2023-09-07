@@ -4,6 +4,7 @@ module Types
 
     field :all_merchants, [MerchantType],  null: true  
     field :all_services, [ServiceType], null: true 
+    field :all_bookings, [BookingType], null: true 
 
     def all_merchants
       merchants = Merchant.includes(:categories).all
@@ -13,20 +14,32 @@ module Types
       services = Service.all
     end
 
-    field :find_merchant, MerchantType, null: true do
-      description "Find a merchant by ID and get their associated services"
-      
+    def all_bookings
+      bookings = Booking.includes(:service, :user).all    
     end
 
+    field :find_merchant, MerchantType, null: true do
+      description "Find a merchant by ID and get their associated services"
+    end
     def find_merchant
-
       return unless context[:current_user].is_a?(Merchant)
       user = context[:current_user]
       
-      merchant = Merchant.includes(:categories, :services).find(user.id)
-
+      merchant = Merchant.includes(:categories, :services, :bookings).find(user.id)
       merchant
     end
+
+    field :user_bookings, [BookingType], null: true do
+      description "User bookings"
+    end
+    
+    def user_bookings
+      user = context[:current_user]
+      bookings = user.bookings.includes(:service, :merchant) # Use 'includes' to eager load associations
+
+      bookings
+    end
+
     # Add root-level fields here.
     # They will be entry points for queries on your schema.
 

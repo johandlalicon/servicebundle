@@ -6,7 +6,7 @@ import App from "./App.vue";
 import router from "./router";
 import { setContext } from "@apollo/client/link/context";
 import { createPinia } from "pinia";
-
+import { useAuthStore } from "../src/store/auth";
 import VCalendar from "v-calendar";
 import "v-calendar/style.css";
 
@@ -50,4 +50,6 @@ const app = createApp({
 });
 app.use(router);
 app.use(VCalendar, {});
-app.use(pinia).mount("#app");
+app.use(pinia);
+// app.use(useAuthStore);
+app.mount("#app");

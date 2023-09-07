@@ -15,6 +15,7 @@ module Mutations
     argument :auth_provider, AuthProviderSignupData, required: false
 
     def resolve(auth_provider: nil)
+      
       user = User.create!(
         email: auth_provider&.[](:credentials)&.[](:email),
         password: auth_provider&.[](:credentials)&.[](:password),

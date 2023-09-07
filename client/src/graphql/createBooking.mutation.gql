@@ -1,0 +1,20 @@
+mutation CreateBooking($serviceId: ID!, $appointmentDate: ISO8601DateTime!) {
+  createBooking(
+    input: {
+      booking: { serviceId: $serviceId, appointmentDate: $appointmentDate }
+    }
+  ) {
+    booking {
+      id
+      appointmentDate
+      receipt
+      service {
+        name
+        id
+      }
+      merchant {
+        name
+      }
+    }
+  }
+}

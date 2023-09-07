@@ -1,6 +1,8 @@
 import HomePage from "../views/HomePage.vue";
 import MerchantPage from "../views/MerchantPage.vue";
 import MarketplacePage from "../views/MarketplacePage.vue";
+import UserBookingsPage from "../views/UserBookingsPage.vue";
+import AdminPage from "../views/AdminPage.vue";
 import { createRouter, createWebHistory } from "vue-router";
 
 const routes = [
@@ -16,8 +18,18 @@ const routes = [
   },
   {
     path: "/marketplace",
-    name: "user",
+    name: "marketplace",
     component: MarketplacePage,
+  },
+  {
+    path: "/userbookings",
+    name: "bookings",
+    component: UserBookingsPage,
+  },
+  {
+    path: "/admin",
+    name: "admin",
+    component: AdminPage,
   },
 ];
 

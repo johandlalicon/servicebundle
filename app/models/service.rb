@@ -1,7 +1,8 @@
 class Service < ApplicationRecord
   belongs_to :merchant
   belongs_to :category
-
+  has_many :bookings
+  
   before_validation :set_default_image_url
 
   validates :name, :description, :price, :opening_time, :closing_time,  presence: true

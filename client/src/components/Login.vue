@@ -39,10 +39,10 @@ function login() {
 onDone(result => {
 
     const userType = result.data.signInUser.userType
+    console.log(userType)
     localStorage.setItem('token', result.data.signInUser.token)
     if (result.data.signInUser.userType === "User") {
         const user = result.data.signInUser.user;
-
         authStore.setUser(user)
         userTypeStore.setUserType(userType);
         router.push("/user")
@@ -52,6 +52,12 @@ onDone(result => {
         authStore.setUser(merchant)
         userTypeStore.setUserType(userType);
         router.push("/merchant")
+    }
+    else if (result.data.signInUser.userType === "Admin") {
+        const user = result.data.signInUser.user;
+        authStore.setUser(user)
+        userTypeStore.setUserType(userType);
+        router.push("/admin")
     }
 
 })

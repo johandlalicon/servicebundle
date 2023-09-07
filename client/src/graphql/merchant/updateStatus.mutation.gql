@@ -1,0 +1,9 @@
+mutation UpdateStatus($id: ID!, $status: String!) {
+  updateStatus(input: { status: $status, id: $id }) {
+    booking {
+      completed
+      cancelled
+      upcoming
+    }
+  }
+}

@@ -1,37 +1,44 @@
 # frozen_string_literal: true
 
 module Types
-  class MerchantType < Types::BaseObject
+  class BookingType < Types::BaseObject
     field :id, ID, null: false
-    field :name, String
-    field :email, String
-    field :password_digest, String
+    field :user_id, ID, null: false
+    field :service_id, ID, null: false
+    field :merchant_id, ID, null: false
+    field :upcoming, Boolean
+    field :cancelled, Boolean
+    field :completed, Boolean
+    field :receipt, ID
     field :created_at, GraphQL::Types::ISO8601DateTime, null: false
     field :updated_at, GraphQL::Types::ISO8601DateTime, null: false
-    field :services, [ServiceType], null: true do
+    field :appointment_date, GraphQL::Types::ISO8601DateTime
+    field :service, ServiceType, null: true do
       description "Services offered by this merchant"
     end
-    field :categories, [CategoryType], null: true do
-      description "Service Category"
-    end
-    field :bookings, [BookingType], null: true do
-      description "Booking Category"
+    field :merchant, MerchantType, null: true do
+      description "Merchant linked to this booking"
     end
 
-    def services
+    field :user, UserType, null: true do
+      description "User linked to this booking"
+    end
+
+    def service
       # Use the association to retrieve all services associated with this merchant
       # Replace 'Merchant' and 'Service' with your actual model names
-      object.services
+      object.service
     end
-    def categories
+    def merchant
       # Use the association to retrieve all services associated with this merchant
       # Replace 'Merchant' and 'Service' with your actual model names
-      object.categories
+      object.merchant 
     end
-    def bookings
+    def user
       # Use the association to retrieve all services associated with this merchant
       # Replace 'Merchant' and 'Service' with your actual model names
-      object.bookings
+      object.user 
     end
+
   end
 end

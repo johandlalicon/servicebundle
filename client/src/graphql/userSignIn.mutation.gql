@@ -4,6 +4,7 @@ mutation SignIin($email: String!, $password: String!) {
     userType
     user {
       id
+      email
     }
     merchant {
       id

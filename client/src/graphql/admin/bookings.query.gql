@@ -1,0 +1,25 @@
+query {
+  allBookings {
+    id
+    receipt
+    appointmentDate
+    merchantId
+    cancelled
+    completed
+    upcoming
+    createdAt
+    user {
+      firstName
+      lastName
+    }
+    merchant {
+      name
+    }
+    service {
+      id
+      name
+      price
+      merchant
+    }
+  }
+}
