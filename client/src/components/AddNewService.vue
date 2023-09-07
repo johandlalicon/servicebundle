@@ -66,7 +66,7 @@ import AddServiceMutation from "../graphql/merchant/addService.mutation.gql"
 import { useRouter } from 'vue-router';
 
 const timezone = ref('Asia/Shanghai');
-
+const router = useRouter();
 const serviceName = ref(props.existingServiceData ? props.existingServiceData.name : '');
 const serviceDescription = ref(props.existingServiceData ? props.existingServiceData.description : '');
 const selectedCategory = ref(props.existingServiceData ? props.existingServiceData.category.id : 0);
