@@ -126,7 +126,7 @@ function determineStatus(cancelled, completed, upcoming) {
 onResult(({ data }) => {
     bookings.value = data?.allBookings || []
 
-    console.log(data.allBookings)
+    console.log(data)
 
 });
 
