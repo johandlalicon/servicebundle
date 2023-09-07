@@ -73,6 +73,8 @@ const servicePrice = ref(props.existingServiceData ? props.existingServiceData.p
 const startTime = ref(props.existingServiceData ? props.existingServiceData.openingTime : new Date());
 const endTime = ref(props.existingServiceData ? props.existingServiceData.closingTime : new Date());
 
+const imageFound = ref(false)
+
 const props = defineProps({
     categories: {
         type: Array
@@ -85,10 +87,9 @@ const props = defineProps({
 })
 
 const widget = cloudinary.createUploadWidget(
-    { cloud_name: "dgks1y9qz", upload_preset: "waejp7di", sources: ['local'] },
+    { cloud_name: "dgks1y9qz", upload_preset: "waejp7di", sources: ['local'], autoClose: true, },
     (error, result) => {
         if (!error && result && result.event === "success") {
-            console.log("Done uploading...")
             image.value = result.info.secure_url;
         }
 
