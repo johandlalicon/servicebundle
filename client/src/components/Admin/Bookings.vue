@@ -5,12 +5,14 @@
         <h2 class="text-2xl font-semibold mb-4">All Booking History</h2>
         <div v-for="booking in bookings" :key="booking.id" class="space-y-6">
             <div v-if="!booking.upcoming" class="bg-white rounded-lg shadow-md p-4">
+
                 <div class="flex justify-between items-center">
                     <div class="text-lg font-semibold">{{ booking.receipt }}</div>
                     <div class="text-green-600 font-semibold">
                         {{ determineStatus(booking.cancelled, booking.completed, booking.upcoming) }}
                     </div>
                 </div>
+
                 <div class="mt-2">
                     <div><strong>Booking Date:</strong> {{ formatDateTime(booking.createdAt) }}</div>
                     <div><strong>Name of Customer:</strong> {{ booking.user.firstName }} {{ booking.user.lastName }}</div>
@@ -21,8 +23,8 @@
                     <div><strong>Amount:</strong> {{ booking.service.price }}</div>
                 </div>
             </div>
-            <div v-else>
-                <h2 class="text-2xl font-semibold mb-4">Upcoming Bookings</h2>
+
+            <div v-else-if="booking.upcoming" class="bg-white rounded-lg shadow-md p-4">
                 <div class="flex justify-between items-center">
                     <div class="text-lg font-semibold">{{ booking.receipt }}</div>
                     <div v-if="!showUpdateStatus">
@@ -42,9 +44,12 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="mt-2">
+
                     <div><strong>Booking Date:</strong> {{ formatDateTime(booking.createdAt) }}</div>
-                    <div><strong>Name of Customer:</strong> {{ booking.user.firstName }} {{ booking.user.lastName }}</div>
+                    <div><strong>Name of Customer:</strong> {{ booking.user.firstName }} {{ booking.user.lastName }}
+                    </div>
                     <div><strong>Service & Service Provider:</strong> {{ booking.service.name }} |
                         {{ booking.merchant.name }}
                     </div>
@@ -53,7 +58,6 @@
                 </div>
             </div>
         </div>
-
     </div>
 </template>
   

@@ -47,7 +47,9 @@ const logout = () => {
                         <Login />
                     </div>
                     <div v-else class="flex gap-4">
-
+                        <router-link v-if="type === 'User'" to="/userbookings"
+                            class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">View
+                            My Bookings</router-link>
                         <router-link v-if="type === 'Admin'" to="/admin"
                             class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">View
                             All Bookings</router-link>

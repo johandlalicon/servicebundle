@@ -16,9 +16,9 @@
             </select>
         </div>
         <div><label>Add A Photo: </label>
-            <button @click.prevent="openUploadWidget"
-                class="py-2 px-4 border border-gray-300 rounded-md bg-slate-200">Upload</button>
-
+            <button @click.prevent="openUploadWidget" class="py-2 px-4 border border-gray-300 rounded-md bg-slate-200"
+                :disabled="imageUploadDone">Upload</button>
+            <div v-if="imageUploadDone">Image has been uploaded</div>
         </div>
         <div class="flex flex-col gap-6 items-center">
             <div class="flex flex-col items-center gap-4">
@@ -76,7 +76,7 @@ const servicePrice = ref(props.existingServiceData ? props.existingServiceData.p
 const startTime = ref(props.existingServiceData ? props.existingServiceData.openingTime : new Date());
 const endTime = ref(props.existingServiceData ? props.existingServiceData.closingTime : new Date());
 
-const imageFound = ref(false)
+const imageUploadDone = ref(false)
 
 const isLoading = ref(false);
 
@@ -97,6 +97,7 @@ const widget = cloudinary.createUploadWidget(
     (error, result) => {
         if (!error && result && result.event === "success") {
             image.value = result.info.secure_url;
+            imageUploadDone.value = true
         }
 
     }

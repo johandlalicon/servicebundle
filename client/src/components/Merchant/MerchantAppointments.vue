@@ -13,9 +13,7 @@
             <div>
                 <div v-if="!showUpdateStatus">
                     <strong>Status:</strong> {{ status }}
-                    <button @click="getBookingId(props.bookingId)"
-                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Update</button>
-
+                    <button @click="getBookingId(props.bookingId)">Update</button>
                 </div>
                 <div v-else>
                     <select v-model="selectedStatus">
@@ -44,20 +42,6 @@ const { mutate: updateStatus, onDone, onError, error, result } = useMutation(Upd
         id: bookingId.value,
         status: selectedStatus.value,
     },
-
-    // update(cache, { data: { updateStatus } }) {
-    //     let data = cache.readQuery({ query: findMerchant })
-    //     data = {
-    //         ...data,
-    //         bookings: [
-    //             data.booking,
-    //             updateStatus
-    //         ]
-    //     }
-    //     console.log(data)
-    //     //     data.bookings.push(updateStatus)
-    //     cache.writeQuery({ query: findMerchant, data })
-    // },
 }))
 
 onDone((data) => {

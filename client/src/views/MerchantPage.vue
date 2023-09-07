@@ -1,6 +1,7 @@
 <template>
     <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
-        <h1 class="text-xl font-extrabold">MERCHANT DASHBOARD</h1>
+        <h1 class="text-xl font-extrabold">MERCHANT DASHBOARD FOR {{ merchantName }}</h1>
+        <p v-if="loading">Loading...</p>
         <div class="relative flex h-16 items-center justify-between">
             <div class="flex flex-1 items-center justify-center ">
                 <div class="flex space-x-4">
@@ -56,10 +57,10 @@
                 </div>
 
                 <div class="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
-                    <h1>MOST BOOKED SERVICE</h1>
+                    <h1 v-if="highestBooking.bookingCount > 0">MOST BOOKED SERVICE</h1>
                     <div class="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
-                        <ServiceCard :key="highestBooking.id" :name="highestBooking.name" :image="highestBooking.imageUrl"
-                            :price="highestBooking.price" />
+                        <ServiceCard v-if="highestBooking.bookingCount > 0" :key="highestBooking.id"
+                            :name="highestBooking.name" :image="highestBooking.imageUrl" :price="highestBooking.price" />
                         <ServiceCard v-for="service in services" :key="service.id" :name="service.name"
                             :image="service.imageUrl" :price="service.price" :servicesData="services"
                             :existingServiceData="service" :categories="categories" :bookCount="service.bookingCount" />
@@ -70,12 +71,12 @@
         </div>
         <div v-else-if="showCard === 'AllBookings'">
 
-
             <div class="mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 max-w-screen-lg">
+                <h1 v-if="merchantBookings.length === 0" class="text-xl font-extrabold">No bookings yet</h1>
                 <MerchantAppointments v-for="booking in merchantBookings" :key="booking.id" :booking-id="booking.id"
                     :user="booking.user" :appointment-date="booking.appointmentDate" :service="booking.service"
                     :cancelled="booking.cancelled" :completed="booking.completed" :upcoming="booking.upcoming" />
-                <!-- Display most booked services -->
+
             </div>
 
         </div>
@@ -101,7 +102,6 @@ import GetMerchantQuery from '../graphql/merchant/findMerchant.query.gql'
 import { ref } from 'vue';
 
 import MerchantAppointments from '../components/Merchant/MerchantAppointments.vue';
-import MerchantMostBooked from '../components/Merchant/MerchantMostBooked.vue'
 
 const isAddCategoryButtonVisible = ref(true);
 const isAddServiceButtonVisible = ref(true);
@@ -111,6 +111,7 @@ const selectedCategory = ref([]);
 const services = ref([]);
 const merchantBookings = ref([]);
 const highestBooking = ref({})
+const merchantName = ref('')
 
 function mostBooked(services) {
     return services.reduce((prev, current) =>
@@ -123,6 +124,7 @@ const { result, onResult, loading } = useQuery(GetMerchantQuery, {}, { fetchPoli
 
 onResult(({ data }) => {
     console.log(data)
+    merchantName.value = data?.findMerchant.name
     categories.value = data?.findMerchant?.categories || []
     services.value = data?.findMerchant?.services || []
     merchantBookings.value = data?.findMerchant?.bookings || []
