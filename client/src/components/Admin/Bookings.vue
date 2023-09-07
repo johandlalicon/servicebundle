@@ -1,5 +1,7 @@
 <template>
     <div>
+        <div v-if="loading">Loading...</div>
+        <div v-if="error">{{ error.message }}</div>
         <h2 class="text-2xl font-semibold mb-4">All Booking History</h2>
         <div v-for="booking in bookings" :key="booking.id" class="space-y-6">
             <div v-if="!booking.upcoming" class="bg-white rounded-lg shadow-md p-4">
@@ -122,13 +124,9 @@ function determineStatus(cancelled, completed, upcoming) {
 }
 
 onResult(({ data }) => {
-    bookings.value = data.allBookings
+    bookings.value = data?.allBookings || []
 
     console.log(data.allBookings)
-    // categories.value = data?.findMerchant?.categories || []
-    // services.value = data?.findMerchant?.services || []
-    // merchantBookings.value = data?.findMerchant?.bookings || []
-    // highestBooking.value = mostBooked(data.findMerchant.services)
 
 });
 
@@ -144,16 +142,6 @@ onResult(({ data }) => {
 //         status = "Upcoming";
 //     }
 // }
-
-const markAsCompleted = (index) => {
-    // Handle marking the booking as completed here
-    console.log(`Marking booking ${index} as completed`);
-};
-
-const cancelBooking = (index) => {
-    // Handle canceling the booking here
-    console.log(`Canceling booking ${index}`);
-};
 </script>
   
 <style scoped>
