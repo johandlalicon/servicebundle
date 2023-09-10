@@ -74,9 +74,9 @@ const authStore = useAuthStore();
 const userTypeStore = useUserTypeStore();
 
 const email = ref('');
-const firstName = ref(authStore.user.firstName ? authStore.user.firstName : '');
-const lastName = ref(authStore.user.lastName ? authStore.user.lastName : '');
-const mobileNumber = ref(authStore.user.mobileNumber ? authStore.user.mobileNumber : '');
+const firstName = ref(authStore.user ? authStore.user.firstName : '');
+const lastName = ref(authStore.user ? authStore.user.lastName : '');
+const mobileNumber = ref(authStore.user ? authStore.user.mobileNumber : '');
 const paymentMethod = ref('');
 const password = ref('')
 
