@@ -36,7 +36,7 @@ module Types
     
     def user_bookings
       user = context[:current_user]
-      bookings = user.bookings.includes(:service, :merchant) # Use 'includes' to eager load associations
+      bookings = user.bookings.includes(:service, :merchant) 
 
       bookings
     end

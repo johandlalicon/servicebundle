@@ -33,7 +33,7 @@
                 <VDatePicker v-model.string="endTime" mode="time" hide-time-header :timezone="timezone" />
             </div>
             {{ startTime.value }} {{ endTime.value }}
-            <div class="flex gap-6">
+            <!-- <div class="flex gap-6">
                 <label for="daysOfWeek"><strong>Available Days: </strong></label>
                 <select id="daysOfWeek" v-model="selectedDays" multiple>
                     <option value="Sunday">Sunday</option>
@@ -44,7 +44,18 @@
                     <option value="Friday">Friday</option>
                     <option value="Saturday">Saturday</option>
                 </select>
+            </div> -->
+            <div class="flex gap-6">
+                <label for="daysOfWeek"><strong>Available Days:</strong></label>
+                <div class="flex flex-col justify-center align-middle">
+                    <!-- Use v-for to create checkboxes for each day of the week -->
+                    <div v-for="day in daysOfWeek" :key="day" class="flex gap-2">
+                        <input type="checkbox" :id="day" :value="day" v-model="selectedDays" />
+                        <label :for="day">{{ day }}</label>
+                    </div>
+                </div>
             </div>
+
             <div class="flex gap-4 items-center">
                 <label for="price">Price:</label>
                 <BaseInput v-model="servicePrice" step="0.01" placeholder="Enter price" required type="number" />
@@ -79,6 +90,10 @@ const endTime = ref(props.existingServiceData ? props.existingServiceData.closin
 const imageUploadDone = ref(false)
 
 const isLoading = ref(false);
+
+const daysOfWeek = [
+    'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'
+];
 
 
 const props = defineProps({

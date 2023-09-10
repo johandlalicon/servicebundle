@@ -1,6 +1,7 @@
 <template>
     <div>
         <div v-if="loading">Loading...</div>
+        {{ bookings.count }}
         <div v-if="error">{{ error.message }}</div>
         <h2 class="text-2xl font-semibold mb-4">All Booking History</h2>
         <div v-for="booking in bookings" :key="booking.id" class="space-y-6">

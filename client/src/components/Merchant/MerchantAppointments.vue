@@ -13,7 +13,8 @@
             <div>
                 <div v-if="!showUpdateStatus">
                     <strong>Status:</strong> {{ status }}
-                    <button @click="getBookingId(props.bookingId)">Update</button>
+                    <button @click="getBookingId(props.bookingId)"
+                        class="bg-blue-500 hover:bg-blue-700 text-white py-1 px-2 rounded">Update</button>
                 </div>
                 <div v-else>
                     <select v-model="selectedStatus">

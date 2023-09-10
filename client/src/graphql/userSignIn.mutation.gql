@@ -5,6 +5,9 @@ mutation SignIin($email: String!, $password: String!) {
     user {
       id
       email
+      firstName
+      lastName
+      mobileNumber
     }
     merchant {
       id

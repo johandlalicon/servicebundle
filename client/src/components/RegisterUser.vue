@@ -19,14 +19,14 @@
                 <BaseInput v-model="email" label="Email Address" type="email" />
             </div>
             <div class="mb-4">
-                <BaseInput v-model="firstName" label="First Name" />
+                <BaseInput v-model="firstName" label="First Name" :disabled="isLoggedIn" />
             </div>
 
             <div class="mb-4">
-                <BaseInput v-model="lastName" label="Last Name" />
+                <BaseInput v-model="lastName" label="Last Name" :disabled="isLoggedIn" />
             </div>
             <div class="mb-4">
-                <BaseInput v-model="mobileNumber" label="Mobile Number" type="number" />
+                <BaseInput v-model="mobileNumber" label="Mobile Number" type="number" :disabled="isLoggedIn" />
             </div>
             <div class="mb-4">
                 <BaseInput v-if="!isLoggedIn" v-model="password" label="Password" type="password" />
@@ -74,9 +74,9 @@ const authStore = useAuthStore();
 const userTypeStore = useUserTypeStore();
 
 const email = ref('');
-const firstName = ref('');
-const lastName = ref('');
-const mobileNumber = ref('');
+const firstName = ref(authStore.user.firstName ? authStore.user.firstName : '');
+const lastName = ref(authStore.user.lastName ? authStore.user.lastName : '');
+const mobileNumber = ref(authStore.user.mobileNumber ? authStore.user.mobileNumber : '');
 const paymentMethod = ref('');
 const password = ref('')
 
